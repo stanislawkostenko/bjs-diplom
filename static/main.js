@@ -1,14 +1,10 @@
 class Profile {
 
-    // constructor(name, surname, country, birth) {
-    //     this.name = name;
-    //     this.surname = surname;
-    //     this.country = country;
-    //
-    //     birth = new Date().getFullYear();
-    //     const age = new Date().getFullYear() - birth;
-    //     this.age = age;
-    // }
+    constructor(object) {
+        this.username = object.username;
+        this.name = { firstName: object.firstName, lastName: object.lastName };
+        this.password = object.password;
+    }
 
     addNewUser(callback) {
 		    return ApiConnector.createUser(
@@ -26,10 +22,6 @@ class Profile {
 
     authorization({ username, password }, callback) {
         return ApiConnector.performLogin(
-            {
-                username: this.username,
-                password: this.password
-            },
             (err, data) => {
                 console.log(`Authorizing user ${this.username}`);
                 callback(err, data);
@@ -58,7 +50,18 @@ class Profile {
         });
     }
 
+    getStocks(callback) {
+        return ApiConnector.getStocks((err, data) => {
+            console.log(`Getting stocks info`);
+            callback(err, data);
+        });
+    }
+
 }
-//
-// const sguclicky = new Profile('Stanislaw', 'Guslicky', 'Russia');
-// console.log(sguclicky);
+
+const sguslicky = new Profile({
+  username: 'sguclicky',
+  name: { firstName: 'stanislaw', lastName: 'guslicky' },
+  password: 'f5ff65fw3e23e',
+});
+console.log(sguslicky);
