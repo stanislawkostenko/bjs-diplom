@@ -20,15 +20,13 @@ class Profile {
 		    );
     }
 
-    authorization({ username, password }, callback) {
-        username = this.username;
-        password = this.password;
-        return ApiConnector.performLogin(
-            (err, data) => {
-                console.log(`Authorizing user ${this.username}`);
-                callback(err, data);
-            }
-        );
+    authorization(callback) {
+		    return ApiConnector.performLogin({username: this.username, password: this.password},
+				    (err, data) => {
+						    console.log(`Authorizing user ${this.username}`);
+						    callback(err, data);
+				    }
+		    );
     }
 
     addMoney({ currency, amount }, callback) {
@@ -58,9 +56,14 @@ function getStocks(callback) {
     return ApiConnector.getStocks((err, data) => {
         console.log(`Getting stocks info`);
         callback(err, data);
+        if (err) {
+            console.error('Error during getting stocks info');
+        } else {
+            const stocksInfo = data;
+            console.log(`Loading actual stocks info...\n${data}`);
+        }
     });
 }
-
 getStocks();
 
 
@@ -90,7 +93,24 @@ function main() {
         }
     });
 
+    STGfilat2023.addNewUser({ username: 'stgfilat2023', name: { firstName: 'Roman',
+    lastName: 'Filatov' }, password: '676vsfsd98nd3' }, (err, data) => {
+        if (err) {
+            console.error('Error during creating new user!');
+        } else {
+            console.log(`${this.username} is created!`)
+        }
+    });
+
     SGuslicky.authorization({username: 'sguclicky', password: 'f5ff65fw3e23e'}, (err, data) => {
+        if (err) {
+            console.error('Error during authorizating! Wrong username or password!')
+        } else {
+            console.log(`${this.username} is authorized!`)
+        }
+    });
+
+    STGfilat2023.authorization({username: 'stgfilat2023', password: '676vsfsd98nd3'}, (err, data) => {
         if (err) {
             console.error('Error during authorizating! Wrong username or password!')
         } else {
@@ -109,18 +129,17 @@ function main() {
     SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOINS', targetAmount: 500000 },
     (err, data) => {
         if (err) {
-            console.error(`Error during converting ${fromCurrency} to ${targetCurrency}!`);
+            console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
         } else {
-            console.log(`Converted to coins ${SGuslicky}`);
-            /* Я НЕ СОВСЕМ ПОНЯЛ ПО СКРИНШОТУ, ЧТО ДОЛЖНО БЫТЬ ПОСЛЕ COINS */
+            console.log(`Converted to coins ${data}`);
         }
     });
 
     SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
         if (err) {
-            console.error(`Error during sending money to ${to}!`);
+            console.error(`Error during sending money to ${this.to}!`);
         } else {
-            console.log(`${STGfilat2023.username} has got ${amount} ${this.targetCurrency}`);
+            console.log(`${STGfilat2023.username} has got ${this.amount} ${this.targetCurrency}`);
         }
     });
 
