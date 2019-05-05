@@ -1,9 +1,9 @@
 class Profile {
 
-    constructor(object) {
-        this.username = object.username;
-        this.name = { firstName: object.firstName, lastName: object.lastName };
-        this.password = object.password;
+    constructor({ username, name: { firstName, lastName }, password }) {
+        this.username = username;
+        this.name = { firstName, lastName };
+        this.password = password;
     }
 
     addNewUser(callback) {
@@ -55,16 +55,17 @@ class Profile {
 function getStocks(callback) {
     return ApiConnector.getStocks((err, data) => {
         console.log(`Getting stocks info`);
-        callback(err, data);
-        if (err) {
-            console.error('Error during getting stocks info');
-        } else {
-            const stocksInfo = data;
-            console.log(`Loading actual stocks info...\n${data}`);
-        }
+        callback(err, data[99]);
     });
 }
-getStocks();
+getStocks((err, data) => {
+    if (err) {
+        console.error('Error during getting stocks info');
+    } else {
+        const stocksInfo = data;
+        console.log(`Loading actual stocks info...\n${data}`);
+    }
+});
 
 
 
@@ -84,8 +85,7 @@ function main() {
 
 
 
-    SGuslicky.addNewUser({ username: 'sguclicky', name: { firstName: 'Stanislaw',
-    lastName: 'Guslicky' }, password: 'f5ff65fw3e23e' }, (err, data) => {
+    SGuslicky.addNewUser((err, data) => {
         if (err) {
             console.error('Error during creating new user!');
         } else {
@@ -93,8 +93,7 @@ function main() {
         }
     });
 
-    STGfilat2023.addNewUser({ username: 'stgfilat2023', name: { firstName: 'Roman',
-    lastName: 'Filatov' }, password: '676vsfsd98nd3' }, (err, data) => {
+    STGfilat2023.addNewUser((err, data) => {
         if (err) {
             console.error('Error during creating new user!');
         } else {
@@ -102,7 +101,7 @@ function main() {
         }
     });
 
-    SGuslicky.authorization({username: 'sguclicky', password: 'f5ff65fw3e23e'}, (err, data) => {
+    SGuslicky.authorization((err, data) => {
         if (err) {
             console.error('Error during authorizating! Wrong username or password!')
         } else {
@@ -110,7 +109,7 @@ function main() {
         }
     });
 
-    STGfilat2023.authorization({username: 'stgfilat2023', password: '676vsfsd98nd3'}, (err, data) => {
+    STGfilat2023.authorization((err, data) => {
         if (err) {
             console.error('Error during authorizating! Wrong username or password!')
         } else {
@@ -131,7 +130,7 @@ function main() {
         if (err) {
             console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
         } else {
-            console.log(`Converted to coins ${data}`);
+            console.log(`Converting ${fromCurrency} to ${targetAmount} ${targetCurrency}`);
         }
     });
 
