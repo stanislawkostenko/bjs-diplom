@@ -52,12 +52,15 @@ class Profile {
 
 }
 
+
+
 function getStocks(callback) {
     return ApiConnector.getStocks((err, data) => {
         console.log(`Getting stocks info`);
         callback(err, data[99]);
     });
 }
+
 getStocks((err, data) => {
     if (err) {
         console.error('Error during getting stocks info');
