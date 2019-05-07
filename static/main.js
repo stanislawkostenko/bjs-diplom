@@ -122,9 +122,10 @@ function main() {
                 if (err) {
                     console.error(`Error during adding money to ${this.username}`);
                 } else {
+                    const targetAmount = stocksInfo['EUR_NETCOIN'] * 500000;
                     console.log(`Added ${this.amount} ${this.currency} to ${this.username}`);
                 }
-                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOIN', targetAmount: 5000000 },
+                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOIN', targetAmount },
                 (err, data) => {
                     if (err) {
                         console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
