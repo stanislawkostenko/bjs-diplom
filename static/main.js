@@ -128,16 +128,15 @@ function main() {
                 (err, data) => {
                     if (err) {
                         console.error(`Error during converting EUR to NETCOIN!`);
-                        console.log(err);
                     } else {
-                        let convertSum = this.targetCurrency * stocksInfo.EUR_NETCOIN;
-                        console.log(`Converted to coins`, convertSum);
+                        let convertSum = 500000 * stocksInfo.EUR_NETCOIN;
+                        console.log(`Converted to coins`, data);
                     }
-                    SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
+                    SGuslicky.sendMoney({ to: 'STGfilat2023', amount: 36000 }, (err, data) => {
                         if (err) {
                             console.error(`Error during sending money to ${this.to}!`);
                         } else {
-                            console.log(`${STGfilat2023.username} has got ${this.amount} ${this.targetCurrency}`);
+                            console.log(`${STGfilat2023.username} has got 36000 NETCOINS`);
                         }
                     });
                 });
