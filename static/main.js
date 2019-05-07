@@ -74,27 +74,19 @@ getStocks((err, data) => {
 
 function main() {
 
-    const SGuslicky = new Profile({
-        username: 'sguclicky',
-        name: { firstName: 'Stanislaw', lastName: 'Guslicky' },
-        password: 'f5ff65fw3e23e',
-    });
-
     const STGfilat2023 = new Profile({
         username: 'STGfilat2023',
         name: { firstName: 'Roman', lastName: 'Filatov' },
         password: '676vsfsd98nd3',
     });
 
-
-
-    SGuslicky.addNewUser((err, data) => {
-        if (err) {
-            console.error('Error during creating new user!');
-        } else {
-            console.log(`${this.username} is created!`)
-        }
+    const SGuslicky = new Profile({
+        username: 'sguclicky',
+        name: { firstName: 'Stanislaw', lastName: 'Guslicky' },
+        password: 'f5ff65fw3e23e',
     });
+
+
 
     STGfilat2023.addNewUser((err, data) => {
         if (err) {
@@ -102,47 +94,50 @@ function main() {
         } else {
             console.log(`${this.username} is created!`)
         }
+        STGfilat2023.authorization((err, data) => {
+            if (err) {
+                console.error('Error during authorizating! Wrong username or password!')
+            } else {
+                console.log(`${this.username} is authorized!`)
+            }
+        });
     });
 
-    SGuslicky.authorization((err, data) => {
+    SGuslicky.addNewUser((err, data) => {
         if (err) {
-            console.error('Error during authorizating! Wrong username or password!')
+            console.error('Error during creating new user!');
         } else {
-            console.log(`${this.username} is authorized!`)
+            console.log(`${this.username} is created!`)
         }
-    });
-
-    STGfilat2023.authorization((err, data) => {
-        if (err) {
-            console.error('Error during authorizating! Wrong username or password!')
-        } else {
-            console.log(`${this.username} is authorized!`)
-        }
-    });
-
-    SGuslicky.addMoney({ currency: 'EUR', amount: 500000 }, (err, data) => {
-        if (err) {
-            console.error(`Error during adding money to ${this.username}`);
-        } else {
-            console.log(`Added ${this.amount} ${this.currency} to ${this.username}`);
-        }
-    });
-
-    SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOINS', targetAmount: 500000 },
-    (err, data) => {
-        if (err) {
-            console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
-        } else {
-            console.log(`Converting ${fromCurrency} to ${targetAmount} ${targetCurrency}`);
-        }
-    });
-
-    SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
-        if (err) {
-            console.error(`Error during sending money to ${this.to}!`);
-        } else {
-            console.log(`${STGfilat2023.username} has got ${this.amount} ${this.targetCurrency}`);
-        }
+        SGuslicky.authorization((err, data) => {
+            if (err) {
+                console.error('Error during authorizating! Wrong username or password!')
+            } else {
+                console.log(`${this.username} is authorized!`)
+            }
+            SGuslicky.addMoney({ currency: 'EUR', amount: 500000 }, (err, data) => {
+                if (err) {
+                    console.error(`Error during adding money to ${this.username}`);
+                } else {
+                    console.log(`Added ${this.amount} ${this.currency} to ${this.username}`);
+                }
+                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOINS', targetAmount: 500000 },
+                (err, data) => {
+                    if (err) {
+                        console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
+                    } else {
+                        console.log(`Converting ${fromCurrency} to ${targetAmount} ${targetCurrency}`);
+                    }
+                    SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
+                        if (err) {
+                            console.error(`Error during sending money to ${this.to}!`);
+                        } else {
+                            console.log(`${STGfilat2023.username} has got ${this.amount} ${this.targetCurrency}`);
+                        }
+                    });
+                });
+            });
+        });
     });
 
 }
