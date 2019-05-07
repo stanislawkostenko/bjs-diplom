@@ -118,21 +118,20 @@ function main() {
             } else {
                 console.log(`sguclicky is authorized!`)
             }
-            SGuslicky.addMoney({ currency: 'EUR', amount: 5000000 }, (err, data) => {
+            SGuslicky.addMoney({ currency: 'EUR', amount: 500000 }, (err, data) => {
                 if (err) {
-                    console.error(`Error during adding money to ${this.username}`);
+                    console.error(`Error during adding money to sguslicky`);
                 } else {
-                    const targetAmount = stocksInfo['EUR_NETCOIN'] * 500000;
-                    console.log(`Added ${this.amount} ${this.currency} to ${this.username}`);
+                    console.log(`Added 50000 of EUR to sguslicky`);
                 }
-                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOIN', targetAmount },
+                SGuslicky.convertingMoney({ fromCurrency: 'EUR', targetCurrency: 'NETCOIN', targetAmount: 500000 },
                 (err, data) => {
                     if (err) {
                         console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
+                        console.log(err);
                     } else {
-                        let convertSum = this.targetCurrency * stocksInfo.RUB_NETCOIN;
-                        console.log(`Converting ${this.fromCurrency} to ${this.targetAmount} ${this.targetCurrency}`);
-                        console.log(`Converting is finished! Now value of ${this.targetCurrency} is ${convertSum}`)
+                        let convertSum = this.targetCurrency * stocksInfo.EUR_NETCOIN;
+                        console.log(`Converted to coins`);
                     }
                     SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
                         if (err) {
