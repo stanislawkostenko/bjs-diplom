@@ -61,12 +61,15 @@ function getStocks(callback) {
     });
 }
 
+let stocksInfo;
+
 getStocks((err, data) => {
     if (err) {
         console.error('Error during getting stocks info');
     } else {
-        const stocksInfo = data;
-        console.log(`Loading actual stocks info...\n${data}`);
+        stocksInfo = data;
+        console.log(`Loading actual stocks info...`);
+        console.log(data);
     }
 });
 
@@ -92,13 +95,13 @@ function main() {
         if (err) {
             console.error('Error during creating new user!');
         } else {
-            console.log(`${this.username} is created!`)
+            console.log(`STGfilat2023 is created!`)
         }
         STGfilat2023.authorization((err, data) => {
             if (err) {
                 console.error('Error during authorizating! Wrong username or password!')
             } else {
-                console.log(`${this.username} is authorized!`)
+                console.log(`STGfilat2023 is authorized!`)
             }
         });
     });
@@ -107,26 +110,28 @@ function main() {
         if (err) {
             console.error('Error during creating new user!');
         } else {
-            console.log(`${this.username} is created!`)
+            console.log(`sguclicky is created!`)
         }
         SGuslicky.authorization((err, data) => {
             if (err) {
                 console.error('Error during authorizating! Wrong username or password!')
             } else {
-                console.log(`${this.username} is authorized!`)
+                console.log(`sguclicky is authorized!`)
             }
-            SGuslicky.addMoney({ currency: 'EUR', amount: 500000 }, (err, data) => {
+            SGuslicky.addMoney({ currency: 'EUR', amount: 5000000 }, (err, data) => {
                 if (err) {
                     console.error(`Error during adding money to ${this.username}`);
                 } else {
                     console.log(`Added ${this.amount} ${this.currency} to ${this.username}`);
                 }
-                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOINS', targetAmount: 500000 },
+                SGuslicky.convertingMoney({ fromCurrency: 'RUB', targetCurrency: 'NETCOIN', targetAmount: 5000000 },
                 (err, data) => {
                     if (err) {
                         console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
                     } else {
-                        console.log(`Converting ${fromCurrency} to ${targetAmount} ${targetCurrency}`);
+                        let convertSum = this.targetCurrency * stocksInfo.RUB_NETCOIN;
+                        console.log(`Converting ${this.fromCurrency} to ${this.targetAmount} ${this.targetCurrency}`);
+                        console.log(`Converting is finished! Now value of ${this.targetCurrency} is ${convertSum}`)
                     }
                     SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
                         if (err) {
