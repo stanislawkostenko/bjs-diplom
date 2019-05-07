@@ -122,16 +122,16 @@ function main() {
                 if (err) {
                     console.error(`Error during adding money to sguslicky`);
                 } else {
-                    console.log(`Added 50000 of EUR to sguslicky`);
+                    console.log(`Added 500000 of EUR to sguslicky`);
                 }
-                SGuslicky.convertingMoney({ fromCurrency: 'EUR', targetCurrency: 'NETCOIN', targetAmount: 500000 },
+                SGuslicky.convertingMoney({ fromCurrency: 'EUR', targetCurrency: 'NETCOIN', targetAmount: 36000 },
                 (err, data) => {
                     if (err) {
-                        console.error(`Error during converting ${this.fromCurrency} to ${this.targetCurrency}!`);
+                        console.error(`Error during converting EUR to NETCOIN!`);
                         console.log(err);
                     } else {
                         let convertSum = this.targetCurrency * stocksInfo.EUR_NETCOIN;
-                        console.log(`Converted to coins`);
+                        console.log(`Converted to coins`, convertSum);
                     }
                     SGuslicky.sendMoney({ to: STGfilat2023, amount: 36000}, (err, data) => {
                         if (err) {
